@@ -1,0 +1,62 @@
+python manage.py shell
+
+>>> print('Hello')
+Hello
+
+>>> from firstapp.models import Pizza
+>>> pizza = Pizza.objects.all()
+>>> print(pizza)
+<QuerySet [<Pizza: Пицца А>, <Pizza: Пицца Б>, <Pizza: Пицца Г>, <Pizza: Пицца В>]>
+
+>>> p1 = pizza[0]
+>>> print(p1)
+Пицца А
+
+>>> price = p1.price
+>>> print(price)
+30
+
+>>> id = p1.id
+>>> print(id)
+1
+
+>>> pizza_filter = Pizza.objects.filter(name__startswith='Пи')
+>>> print(pizza_filter)
+<QuerySet [<Pizza: Пицца А>, <Pizza: Пицца Б>, <Pizza: Пицца Г>, <Pizza: Пицца В>]>
+
+>>> pizza_price = Pizza.objects.filter(price__lte=290)
+>>> print(pizza_price)
+<QuerySet [<Pizza: Пицца А>, <Pizza: Пицца Б>, <Pizza: Пицца Г>, <Pizza: Пицца В>]>
+
+>>> pizza_sort = Pizza.objects.order_by('price')
+>>> print('pizza_sort')
+pizza_sort
+
+>>> pizza_sort = Pizza.objects.order_by('-price', 'name')
+>>> print(pizza_sort)
+<QuerySet [<Pizza: Пицца В>, <Pizza: Пицца Б>, <Pizza: Пицца Г>, <Pizza: Пицца А>]>
+
+>>> pizza_link = Pizza.objects.filter(price__lte=300).order_by('-price')
+>>> print(pizza_link)
+<QuerySet [<Pizza: Пицца В>, <Pizza: Пицца Б>, <Pizza: Пицца Г>, <Pizza: Пицца А>]>
+
+>>> from django.db import models
+>>> ad = Pizza.objects.aggregate(models.Avg('price'), models.Min('price'))
+>>> avg_price = ad['price__avg']
+>>> print(avg_price)
+57.5
+
+>>> avg_price = ad['price__min']
+>>> min_price = ad['price__min']
+>>> print(min_price)
+30
+
+>>> p4 = Pizza.objects.get(name = 'Пицца Б')
+>>> print(p4)
+Пицца Б
+
+>>> p4 = Pizza.objects.get(id = 3)
+>>> print(p4)
+Пицца В
+
+>>> quit()
