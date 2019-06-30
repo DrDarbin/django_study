@@ -3,5 +3,5 @@ from testurlapp import views
 
 urlpatterns = [
 	#site.com/user/12/2000/
-	re_path(r'^user/(\d{2})/(\d{4})/$', views.home, name='home'),
+	path('user/<int:month>/<int:year>/', views.home, name='home'),
 ]
