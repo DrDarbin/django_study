@@ -2,4 +2,5 @@ from django.apps import AppConfig
 
 
 class FirstappConfig(AppConfig):
-    name = 'firstapp'
+	name = 'firstapp'
+	verbose_name = 'Первое приложение'
